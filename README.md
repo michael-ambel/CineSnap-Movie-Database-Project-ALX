@@ -18,7 +18,7 @@ Setup
 1. Clone the repository:
 bash
 Copy code
-git clone https://github.com/yourusername/movie-database-project-cinesnap.git
+git clone https://github.com/michael-ambel/CineSnap-Movie-Database-Project-ALX.git
 2. Install dependencies:
 bash
 Copy code
