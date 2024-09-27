@@ -4,7 +4,7 @@ import Hero from "./Hero";
 
 const Home = () => {
     return ( 
-        <div className="min-w-lg font-normal text-text_main">
+        <div className="flex flex-col items-center w-full min-w-[1024px] font-normal text-text_main">
             <Header />
             <Hero />
             <Footer />

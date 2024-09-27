@@ -12,8 +12,11 @@
     }
   
     /* Reset #root padding and margin */
-    #root {
-      margin: 0;
+    #root{
+      margin: auto;
       padding: 0;
+      display: flex;
+      justify-content: center;
     }
+    
   }
