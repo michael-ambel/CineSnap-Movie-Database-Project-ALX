@@ -1,12 +1,15 @@
+import { useSection } from "../contexts/SectionContext";
+
 const Hero  = () => {
+    const {dark, setDark, homeRef, moviesRef, tvShowsRef} = useSection();
     return ( 
-        <div className="w-full flex flex-col items-start justify-start bg-bg pb-[80px] px-[62px]">
+        <div className={`w-full flex flex-col items-start justify-start px-[62px] ${ dark? 'bg-bg' : 'bg-text_main'}`}>
             <div className="flex w-full mx-auto items-start justify-between">
 
                 {/*Geners list */}
                 <div className="fixed flex flex-col justify-start top-[130px] h-[340px] w-[90px]">
-                    <p className="w-[80px] h-[16px] text-start font-bold mb-[21px]">Gener</p>
-                    <ul className="flex flex-col justify-between w-[90px] h-[243px] mb-[40px] text-start text-[13px] text-inactive font-light">
+                    <p className={`w-[80px] h-[16px] text-start font-bold mb-[21px] ${dark? 'text-text_main' : 'text-card_black'}`}>Gener</p>
+                    <ul className={`flex flex-col justify-between w-[90px] h-[243px] mb-[40px] text-start text-[13px] font-light ${dark? 'text-inactive' : 'text-card_black'}`}>
                         <li><button>Action</button></li>
                         <li><button>Sci-Fi</button></li>
                         <li><button>Fantasy</button></li>
@@ -21,10 +24,10 @@ const Hero  = () => {
 
                     {/*Movies */}
                     {/*Tending Now */}
-                    <div id="movies" className="flex justify-around items-center  h-[350px] w-full mt-[10px] bg-card_black rounded-[8px]">
+                    <div id="movies" ref={moviesRef} className={`flex justify-around items-center  h-[350px] w-full mt-[10px] rounded-[8px] ${dark? 'bg-card_black' : 'bg-inactive'}`}>
                         <div className="flex flex-col items-center h-full ">
                             <span className="mb-[100px] mt-[30px] flex justify-center items-center w-[148px] h-[45px] text-text_yelow font-bold">Movies</span>
-                            <span>Tending Now</span>
+                            <span className={dark? 'text-text_main' : 'text-card_black'}>Tending Now</span>
                         </div>
                         <div className="flex justify-center h-full p-4">
                             <img className="object-cover" src="\del\TendingNow.png" alt="" />
@@ -39,58 +42,58 @@ const Hero  = () => {
 
                         <div className="flex justify-between w-full space-x-[38px]">
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full bg-text_main p-[2px] rounded-[4px]">
+                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\The Crucible.png" alt="" />
                                 </div>
-                                <h1>The Crucible</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>The Crucible</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full bg-text_main p-[2px] rounded-[4px]">
+                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\EVOL.png" alt="" />
                                 </div>
-                                <h1>The Crucible</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>The Crucible</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full h-[222px] bg-text_main p-[2px] rounded-[4px]">
-                                    <img src="\del\card-image.png" alt="" />
+                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
+                                    <img src="\del\Tatami.jpg" alt="" />
                                 </div>
-                                <h1>Movie Name</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>Movie Name</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full h-[222px] bg-text_main p-[2px] rounded-[4px]">
+                                <div className={`w-full p-[2px] h-[222px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\card-image.png" alt="" />
                                 </div>
-                                <h1>Movie Name</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>Movie Name</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}> 9.0</p>
                                     </div>
                                 </div>
                             </div>
@@ -107,62 +110,64 @@ const Hero  = () => {
                         </div>
 
                         <div className="flex justify-between w-full space-x-[38px]">
-                            <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full bg-text_main p-[2px] rounded-[4px]">
+
+                        <div className="flex flex-col items-start w-[153px]">
+                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\The Crucible.png" alt="" />
                                 </div>
-                                <h1>The Crucible</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>The Crucible</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full bg-text_main p-[2px] rounded-[4px]">
+                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\EVOL.png" alt="" />
                                 </div>
-                                <h1>The Crucible</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>The Crucible</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full h-[222px] bg-text_main p-[2px] rounded-[4px]">
-                                    <img src="\del\card-image.png" alt="" />
+                                <div className={`w-full p-[2px] h-[222px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
+                                    <img src="" alt="" />
                                 </div>
-                                <h1>Movie Name</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>Movie Name</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full h-[222px] bg-text_main p-[2px] rounded-[4px]">
+                                <div className={`w-full p-[2px] h-[222px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\card-image.png" alt="" />
                                 </div>
-                                <h1>Movie Name</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>Movie Name</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}> 9.0</p>
                                     </div>
                                 </div>
                             </div>
+
 
                         </div>
                         
@@ -175,62 +180,64 @@ const Hero  = () => {
                         </div>
 
                         <div className="flex justify-between w-full space-x-[38px]">
-                            <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full bg-text_main p-[2px] rounded-[4px]">
+                          
+                        <div className="flex flex-col items-start w-[153px]">
+                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\The Crucible.png" alt="" />
                                 </div>
-                                <h1>The Crucible</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>The Crucible</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full bg-text_main p-[2px] rounded-[4px]">
+                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\EVOL.png" alt="" />
                                 </div>
-                                <h1>The Crucible</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>The Crucible</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full h-[222px] bg-text_main p-[2px] rounded-[4px]">
-                                    <img src="\del\card-image.png" alt="" />
+                                <div className={`w-full p-[2px] h-[222px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
+                                    <img src="" alt="" />
                                 </div>
-                                <h1>Movie Name</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>Movie Name</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full h-[222px] bg-text_main p-[2px] rounded-[4px]">
+                                <div className={`w-full p-[2px] h-[222px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\card-image.png" alt="" />
                                 </div>
-                                <h1>Movie Name</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>Movie Name</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}> 9.0</p>
                                     </div>
                                 </div>
                             </div>
+
 
                         </div>
                         
@@ -239,10 +246,10 @@ const Hero  = () => {
 
                     {/*TV Shows */}
                     {/*Tending Now */}
-                    <div id="tvshows" className="flex justify-around items-center  h-[350px] w-full mt-[70px] bg-card_black rounded-[8px]">
+                    <div id="tvshows" ref={tvShowsRef} className={`flex justify-around items-center  h-[350px] w-full mt-[10px] rounded-[8px] ${dark? 'bg-card_black' : 'bg-inactive'}`}>
                         <div className="flex flex-col items-center h-full ">
                             <span className="mb-[100px] mt-[30px] flex justify-center items-center w-[148px] h-[45px] text-text_yelow font-bold">Tv Shows</span>
-                            <span>Tending Now</span>
+                            <span className={dark? 'text-text_main' : 'text-card_black'}>Tending Now</span>
                         </div>
                         <div className="flex justify-center h-full p-4">
                             <img className="object-cover" src="\del\TendingNow.png" alt="" />
@@ -257,62 +264,64 @@ const Hero  = () => {
                         </div>
 
                         <div className="flex justify-between w-full space-x-[38px]">
+                                                     
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full bg-text_main p-[2px] rounded-[4px]">
+                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\The Crucible.png" alt="" />
                                 </div>
-                                <h1>The Crucible</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>The Crucible</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full bg-text_main p-[2px] rounded-[4px]">
+                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\EVOL.png" alt="" />
                                 </div>
-                                <h1>The Crucible</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>The Crucible</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full h-[222px] bg-text_main p-[2px] rounded-[4px]">
-                                    <img src="\del\card-image.png" alt="" />
+                                <div className={`w-full p-[2px] h-[222px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
+                                    <img src="" alt="" />
                                 </div>
-                                <h1>Movie Name</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>Movie Name</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="flex flex-col items-start w-[153px]">
-                                <div className="w-full h-[222px] bg-text_main p-[2px] rounded-[4px]">
+                                <div className={`w-full p-[2px] h-[222px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
                                     <img src="\del\card-image.png" alt="" />
                                 </div>
-                                <h1>Movie Name</h1>
-                                <div className="flex w-full justify-between text-[12px] text-inactive">
+                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>Movie Name</h1>
+                                <div className="flex w-full justify-between text-[14px] text-inactive">
                                     <p>2024</p>
                                     <div className="flex items-center">
                                         <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className="text-[14px] text-text_main">9.0</p>
+                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}> 9.0</p>
                                     </div>
                                 </div>
                             </div>
+
 
                         </div>
                         
