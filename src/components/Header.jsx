@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useSection } from "../contexts/SectionContext";
+import { useNavigate } from "react-router-dom";
 
 const Header  = () => {
+    const navigate = useNavigate()
 
     const {activeSection, setActiveSection, dark, setDark, homeRef, moviesRef, tvShowsRef} = useSection();
     
@@ -11,6 +13,7 @@ const Header  = () => {
     }
 
     function scrollToSection(section) {
+        navigate(`/#${section}`)
         const element = document.getElementById(section);
         const yOffset = -130; 
         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;

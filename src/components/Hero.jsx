@@ -1,7 +1,52 @@
+import { useEffect, useState } from "react";
 import { useSection } from "../contexts/SectionContext";
+import { Link } from "react-router-dom";
+
+const apiKey = import.meta.env.VITE_API_KEY
+const apiAccessToken = import.meta.env.VITE_API_READ_ACCESS_TOKEN
+const baseURL ='https://api.themoviedb.org/3'
+const posterUrlSm = 'https://image.tmdb.org/t/p/w185'
+const posterUrlMid = 'https://image.tmdb.org/t/p/w342'
+const posterUrlLg = 'https://image.tmdb.org/t/p/w500'
 
 const Hero  = () => {
-    const {dark, setDark, homeRef, moviesRef, tvShowsRef} = useSection();
+    
+    const [popular, setPopular] = useState([])
+    const [popularLoading, setPopularLoading] = useState(true)
+    const [popularError, setPopularError] = useState(null)
+
+    const {dark, moviesRef, tvShowsRef} = useSection();
+
+    useEffect(() => {
+        const fetchPopular = async () => {
+            try{
+                setPopularLoading(true)
+                setPopularError(null)
+
+                const response = await fetch(`${baseURL}/movie/popular?api_key=${apiKey}`)
+                const data = await response.json()
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch movies");
+                  }
+                
+                if(response.ok){
+                    setPopular(data.results)
+                    console.log(data.results);
+                    setPopularLoading(false)
+                    setPopularError(null)
+                }
+            }
+            catch(error){
+                setPopularError(error.message)
+                console.log(error);
+            }
+            finally{
+                setPopularLoading(false)
+            }
+        }
+        fetchPopular();
+    }, [])
     return ( 
         <div className={`w-full flex flex-col items-start justify-start px-[62px] ${ dark? 'bg-bg' : 'bg-text_main'}`}>
             <div className="flex w-full mx-auto items-start justify-between">
@@ -34,73 +79,44 @@ const Hero  = () => {
                         </div>
                     </div>
 
+
+
                     {/*Top Rated */}
-                    <div className="flex flex-col w-full h-[316px] mt-[34px]">
-                        <div className="h-[36px] pb-[14px]">
-                            <p className="h-[19px] mb-[14px]">Top Rated</p>
+                    <div className="flex flex-col w-full h-auto mt-[34px]">
+                        <div className="h-auto pb-[14px]">
+                            <p className="h-[19px] font-bold text-[18px] my-[20px]">Popular</p>
                         </div>
 
-                        <div className="flex justify-between w-full space-x-[38px]">
-                            <div className="flex flex-col items-start w-[153px]">
-                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
-                                    <img src="\del\The Crucible.png" alt="" />
-                                </div>
-                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>The Crucible</h1>
-                                <div className="flex w-full justify-between text-[14px] text-inactive">
-                                    <p>2024</p>
-                                    <div className="flex items-center">
-                                        <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            
-                            <div className="flex flex-col items-start w-[153px]">
-                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
-                                    <img src="\del\EVOL.png" alt="" />
-                                </div>
-                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>The Crucible</h1>
-                                <div className="flex w-full justify-between text-[14px] text-inactive">
-                                    <p>2024</p>
-                                    <div className="flex items-center">
-                                        <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col items-start w-[153px]">
-                                <div className={`w-full p-[2px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
-                                    <img src="\del\Tatami.jpg" alt="" />
-                                </div>
-                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>Movie Name</h1>
-                                <div className="flex w-full justify-between text-[14px] text-inactive">
-                                    <p>2024</p>
-                                    <div className="flex items-center">
-                                        <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}>9.0</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col items-start w-[153px]">
-                                <div className={`w-full p-[2px] h-[222px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
-                                    <img src="\del\card-image.png" alt="" />
-                                </div>
-                                <h1 className={dark? 'text-text_main' : 'text-card_black'}>Movie Name</h1>
-                                <div className="flex w-full justify-between text-[14px] text-inactive">
-                                    <p>2024</p>
-                                    <div className="flex items-center">
-                                        <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
-                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}> 9.0</p>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div>
+                            {popularLoading && <div>Loading...</div>}
+                            {popularError && <div>{popularError}</div>}
+                            {popular && 
+                            <div>
+                                <ul className="grid grid-cols-5 w-full gap-[38px]">
+                                    {popular.map((movie) => (
+                                        <li key={movie.id}>
+                                            <Link to={`/detail/${movie.id}`} className="flex flex-col items-start h-[300px] w-[153px]">
+                                                <div className={`w-full p-[2px] h-[228px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
+                                                    <img src={movie.poster_path? `${posterUrlSm}/${movie.poster_path}`: `\del\EVOL.png`} alt="" />  
+                                                </div>
+                                                <h1 className={`text-[14px] font-bold py-1 ${dark? 'text-text_main' : 'text-card_black'}`}>{movie.title}</h1>
+                                                <div className="flex w-full justify-between text-[14px] text-inactive">
+                                                    <p>{new Date(movie.release_date).getFullYear()}</p>
+                                                    <div className="flex items-center">
+                                                        <img className="w-[13px] h-[13px] mr-[6px] " src="\icons\star.png" alt=""/>
+                                                        <p className={`text-[14px] ${dark? 'text-text_main' : 'text-card'}`}> {Math.round(movie.vote_average*10)/10}</p>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>}
                         </div>
-                        
                     </div>
+
+
+
 
 
                     {/*New Arrivals */}
