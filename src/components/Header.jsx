@@ -1,29 +1,63 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSection } from "../contexts/SectionContext";
 import { useNavigate } from "react-router-dom";
+import { useSearchContext } from "../contexts/SearchContext";
 
 const Header  = () => {
     const navigate = useNavigate()
+    
+    const {searchIn, setSearchIn, setSearched, searchBtn, setSearchBtn, setSearchLoading, searchError, setSearchError, apiKey} = useSearchContext()
 
     const {activeSection, setActiveSection, dark, setDark, homeRef, moviesRef, tvShowsRef} = useSection();
+
+    const searchHandler = async (e) => {
+        e.preventDefault()
+        !searchBtn && navigate('/#movies')
+      if(searchIn){
+        setSearchBtn(true)
+        setSearchLoading(true)
+        setSearchError(null)
+
+        try{
+            const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchIn}`)
+            const movies = await response.json()
+            if(!response.ok){
+                throw Error ('Fetching Error')
+            }
+
+
+            if(movies.results.length === 0){
+                throw Error('No Movie Found')
+            }
+
+            if(movies.results.length > 0){
+                setSearched(movies.results)
+                setSearchLoading(false)
+                setSearchError(null)
+            }
+            
+            
+        }
+        catch(error){
+        
+            setSearchError(error.message)
+            setSearchLoading(false)
+        }  
+      }
+        
+
+
+
+    }
     
     const themeHandler = (e) => {
         e.preventDefault()
         setDark(!dark)
     }
 
-    function scrollToSection(section) {
-        navigate(`/#${section}`)
-        const element = document.getElementById(section);
-        const yOffset = -130; 
-        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      
-        window.scrollTo({ top: y, behavior: 'smooth' });
+   
 
-        setActiveSection(section);
-      }
-
-      useEffect(() => {
+    useEffect(() => {
         const sections = [
             {id: 'home', ref: homeRef },
             {id: 'movies', ref: moviesRef },
@@ -57,6 +91,24 @@ const Header  = () => {
 
       }, [])
 
+      function scrollToSection(section) {
+        navigate(`/#${section}`)
+        
+        setSearchBtn(false)
+        const element = document.getElementById(section);
+
+        // Check if element exists
+        if (!element) {
+            return;
+        }
+        const yOffset = -130; 
+        const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+      
+        window.scrollTo({ top: y, behavior: 'smooth' });
+
+        setActiveSection(section);
+      }
+
     return ( 
         <div className={dark? "sticky top-0 h-[130px] w-full max-w-[1440px] mx-auto min-w-[1024px] bg-bg flex items-center justify-between px-[62px] py-[52px]" : "sticky top-0 h-[130px] w-[100%] max-w-[1440px] mx-auto min-w-[1024px] bg-text_main flex items-center justify-between px-[62px] py-[52px]"}>
             <span className={dark? "text-[26px] font-light" : "text-[26px] font-light text-card"}>Cine<span className="font-bold text-text_red">Snap</span></span>
@@ -65,12 +117,16 @@ const Header  = () => {
                 <input 
                 type="text" 
                 placeholder="Search Movie/Tv Show Here" 
-                className={`text-center px-3 w-[245px] h-[30px] rounded-[39px] placeholder:font-light font-normal border-[2px]  border-none outline-none placeholder:text-inactive ${dark? "bg-text_main" : "bg-card_black"}`}  />
-                <button><img className="w-[28px] h-[28px] bg-transparent" src="/icons/search.png" alt="" /></button>
+                onChange={(e) => {
+                    setSearchIn(e.target.value)
+                }}
+                value = {searchIn}
+                className={`text-center px-3 w-[245px] h-[30px] rounded-[39px] placeholder:font-light font-normal border-[2px]  border-none outline-none placeholder:text-inactive ${dark? "bg-text_main text-card_black" : "bg-card_black text-text_main"}`}  />
+                <button onClick={searchHandler}><img className="w-[28px] h-[28px] bg-transparent" src="/icons/search.png" alt="" /></button>
             </form>
             <nav>
                 <ul className={`flex items-center justify-between w-[270px] h-[28px] text-[16px] font-normal ${dark? "text-text_main" : "text-card_black"}`}>
-                    <button className= {`w-[80px] rounded-full ${activeSection === 'home' ? "border-text_red border-[1px]" : "border-none"}`} onClick={() => scrollToSection('home')}>Home</button>
+                    <button className= {`w-[80px] rounded-full ${activeSection === 'home' ? "border-text_red border-[1px]" : "border-none"}`} onClick={() => scrollToSection('movies')}>Home</button>
                     <button className= {`w-[80px] rounded-full ${activeSection === 'movies' ? "border-text_red border-[1px]" : "border-none"}`} onClick={() => scrollToSection('movies')}>Movies</button>
                     <button className= {`w-[80px] rounded-full ${activeSection === 'tvshows' ? "border-text_red border-[1px]" : "border-none"}`} onClick={() => scrollToSection('tvshows')}>Tv Shows</button>
                 </ul>

@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { useSection } from "../contexts/SectionContext";
 import { Link } from "react-router-dom";
+import { useSearchContext } from "../contexts/SearchContext";
+
 
 const apiKey = import.meta.env.VITE_API_KEY
 const apiAccessToken = import.meta.env.VITE_API_READ_ACCESS_TOKEN
 const baseURL ='https://api.themoviedb.org/3'
 const posterUrlSm = 'https://image.tmdb.org/t/p/w185'
-const posterUrlMid = 'https://image.tmdb.org/t/p/w342'
-const posterUrlLg = 'https://image.tmdb.org/t/p/w500'
+
 
 const Hero  = () => {
-    
+    const {searchBtn} = useSearchContext()
     const [popular, setPopular] = useState([])
-    const [popularLoading, setPopularLoading] = useState(true)
+    const [popularLoading, setPopularLoading] = useState(false)
     const [popularError, setPopularError] = useState(null)
 
     const {dark, moviesRef, tvShowsRef} = useSection();
@@ -28,18 +29,14 @@ const Hero  = () => {
 
                 if (!response.ok) {
                     throw new Error("Failed to fetch movies");
-                  }
-                
-                if(response.ok){
-                    setPopular(data.results)
-                    console.log(data.results);
-                    setPopularLoading(false)
-                    setPopularError(null)
-                }
+                  }               
+                setPopular(data.results)
+                setPopularLoading(false)
+                setPopularError(null)
+            
             }
             catch(error){
                 setPopularError(error.message)
-                console.log(error);
             }
             finally{
                 setPopularLoading(false)
@@ -48,7 +45,7 @@ const Hero  = () => {
         fetchPopular();
     }, [])
     return ( 
-        <div className={`w-full flex flex-col items-start justify-start px-[62px] ${ dark? 'bg-bg' : 'bg-text_main'}`}>
+        <div className={`w-full flex flex-col items-start justify-start px-[62px] ${ dark? 'bg-bg' : 'bg-text_main'} ${searchBtn? 'hidden' : 'block'}`}>
             <div className="flex w-full mx-auto items-start justify-between">
 
                 {/*Geners list */}
@@ -69,7 +66,7 @@ const Hero  = () => {
 
                     {/*Movies */}
                     {/*Tending Now */}
-                    <div id="movies" ref={moviesRef} className={`flex justify-around items-center  h-[350px] w-full mt-[10px] rounded-[8px] ${dark? 'bg-card_black' : 'bg-inactive'}`}>
+                    <div id="movies" ref={moviesRef} className={`flex justify-around items-center  h-[350px] w-full mt-[10px] rounded-[8px] ${dark? 'bg-card_black' : 'bg-[#F5F5F5]'}`}>
                         <div className="flex flex-col items-center h-full ">
                             <span className="mb-[100px] mt-[30px] flex justify-center items-center w-[148px] h-[45px] text-text_yelow font-bold">Movies</span>
                             <span className={dark? 'text-text_main' : 'text-card_black'}>Tending Now</span>
@@ -84,7 +81,7 @@ const Hero  = () => {
                     {/*Top Rated */}
                     <div className="flex flex-col w-full h-auto mt-[34px]">
                         <div className="h-auto pb-[14px]">
-                            <p className="h-[19px] font-bold text-[18px] my-[20px]">Popular</p>
+                            <p className={`h-[19px] font-bold text-[18px] my-[20px] ${dark? 'text-text_main':'text-card_black'}`}>Popular</p>
                         </div>
 
                         <div>
@@ -96,8 +93,8 @@ const Hero  = () => {
                                     {popular.map((movie) => (
                                         <li key={movie.id}>
                                             <Link to={`/detail/${movie.id}`} className="flex flex-col items-start h-[300px] w-[153px]">
-                                                <div className={`w-full p-[2px] h-[228px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
-                                                    <img src={movie.poster_path? `${posterUrlSm}/${movie.poster_path}`: `\del\EVOL.png`} alt="" />  
+                                                <div className={`w-full p-[3px] h-[228px] rounded-[4px] ${dark? 'bg-text_main' : 'bg-card'}`}>
+                                                    <img src={movie.poster_path? `${posterUrlSm}${movie.poster_path}`: `\del\EVOL.png`} alt="" />  
                                                 </div>
                                                 <h1 className={`text-[14px] font-bold py-1 ${dark? 'text-text_main' : 'text-card_black'}`}>{movie.title}</h1>
                                                 <div className="flex w-full justify-between text-[14px] text-inactive">

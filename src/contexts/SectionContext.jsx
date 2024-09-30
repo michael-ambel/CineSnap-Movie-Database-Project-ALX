@@ -4,6 +4,7 @@ const SectionContext = createContext()
 
 export const SectionProvider = ({children}) => {
     const [dark, setDark] = useState(true)
+    const [btnOff, setBtnOff] = useState(false)
 
     const [activeSection, setActiveSection] = useState('home')
 
@@ -12,7 +13,7 @@ export const SectionProvider = ({children}) => {
     const tvShowsRef = useRef(null)
 
     return (
-        <SectionContext.Provider value = {{activeSection, setActiveSection, dark, setDark, homeRef, moviesRef, tvShowsRef}}>
+        <SectionContext.Provider value = {{activeSection, setActiveSection, dark, setDark, homeRef, moviesRef, tvShowsRef, setBtnOff, btnOff}}>
             {children}
         </SectionContext.Provider>
     )
