@@ -8,12 +8,12 @@ import { Link } from "react-router-dom";
 
 
 
-const MovieDetails = () => {
+const TvShowDetails = () => {
     const [detail, setDetail] = useState({})
     const [trailerLink, setTrailerLink] = useState(null)
     const [isReady, setIsReady] = useState(false)
     const [noTrailer, setNoTrailer] = useState(false)
-    const [error, setError] = useState(null)
+
     const [director, setDirector] = useState(null)
     const [casts, setCasts] = useState(null)
     const [similar, setSimilar] = useState(null)
@@ -48,30 +48,27 @@ const MovieDetails = () => {
         
         const movieDetail = async (id) => {
             try{
-                const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`)
+                const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}`)
                 const detail = await response.json()
-
-            if(response.ok){
-                setError(null)
                 setDetail(detail)
-            }
-                //trailer
-                const videoRes = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}`)
+                
+
+                //trailer 
+                const videoRes = await fetch(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=${apiKey}`)
                 const videoData = await videoRes.json()
                 const trailerData = videoData.results.find(v => v.type === 'Trailer')
-                console.log(videoRes);
-                
                 if(videoRes.ok){
                     setTrailerLink(`https://www.youtube.com/embed/${trailerData.key}`)
                     setIsReady(true)
                     setNoTrailer(false)
+                    
                 }
                 
 
                 //credits
-                const creditsRes = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}`)
+                const creditsRes = await fetch(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=${apiKey}`)
                 const creditsData = await creditsRes.json()
-                
+
                 const Director = creditsData.crew.find(d => d.department === "Directing")
                 if(creditsRes.ok){
                     setDirector(Director)  
@@ -79,25 +76,17 @@ const MovieDetails = () => {
                 }
 
                 //similar
-                const similarRsp = await fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${apiKey}`)
+                const similarRsp = await fetch(`https://api.themoviedb.org/3/tv/${id}/similar?api_key=${apiKey}`)
                 const similarData = await similarRsp.json()
                 
                 const Similar = similarData.results.slice(0,3)
                 if(similarRsp.ok){
                     setSimilar(Similar)
                 }
-                
-                
-                
-           
-                
-
-             
-                
 
             }
             catch(error){
-                setError(error.message)
+                console.log(error.message);
             }
         }
 
@@ -109,7 +98,6 @@ const MovieDetails = () => {
             <div className={`flex flex-col items-center w-full min-w-[1024px] font-normal ${dark? 'text-text_main':'text-card_black'}`}>
                 <Header />
                 {!detail && <div>Loading....</div>}
-                {error && <div>error</div>}
                 {detail && 
                 <div className={`flex flex-col w-full min-w-[1024px] max-w-[1440px] px-[63px] py-[30px] h-auto ${dark? 'bg-bg': 'bg-text_main'}`}>
                     <div className="flex w-full h-[420px]">
@@ -122,8 +110,8 @@ const MovieDetails = () => {
                                 <div className="flex flex-col justify-between  min-gap-2 h-full w-[520px]">
                                     {/* detail */}
                                     <div className="flex flex-col justify-between w-[340px] h-auto gap-2">
-                                        <h1 className="text-[24px] font-semibold text-left">{detail.title}</h1>
-                                        <div className="flex justify-start gap-[36px]"><span className="text-inactive">{dateYear(detail.release_date)}</span><span className="text-text_yelow font-semibold">{genres(detail.genres)}</span></div>
+                                        <h1 className="text-[24px] font-semibold text-left">{detail.name}</h1>
+                                        <div className="flex justify-start gap-[36px]"><span className="text-inactive">{dateYear(detail.first_air_date)}</span><span className="text-text_yelow font-semibold">{genres(detail.genres)}</span></div>
                                         <div className="flex justify-between items-center w-full text-[14px]">
                                             <img className="w-[41.5px] h-[20px]" src="/icons/imdb.png" alt="" />
                                             <p className="text-[14px]"><span className="font-bold">{Math.round(detail.vote_average*10)/10}</span>/10</p>
@@ -154,7 +142,7 @@ const MovieDetails = () => {
                                                     ></iframe>
                                                 )}
                                                 {!isReady && <p className="w-full h-full">Loading video...</p>}
-                                                {noTrailer && <p className="w-full h-full">No trailer available...</p>}
+                                                {noTrailer && <p className="w-full h-full">The Movie has no trailer...</p>}
                                                 
                                             </div>
                                         </div>
@@ -165,12 +153,12 @@ const MovieDetails = () => {
                                 <div className="flex flex-col justify-between items-end w-[266px]">
                                     {/* similar movies */}
                                     <div className={`flex flex-col justify-between p-2 min-w-[266px] h-auto ${dark? 'bg-card_black':'bg-text_main'}`}>
-                                        <h2 className="text-[14px] font-medium h-[20px] align-text-top mb-[6px] text-inactive">Similar Movies</h2>
+                                        <h2 className="text-[14px] font-medium h-[20px] align-text-top mb-[6px] text-inactive">Similar Tv</h2>
                                         <div className="flex justify-between h-[114px]">
                                             
                                             {similar && 
                                             similar.map(smlr => (
-                                                <Link to={`/movie/${smlr.id}`} onClick={trailerReset}>
+                                                <Link to={`/tvshow/${smlr.id}`} onClick={trailerReset}>
                                                     <div className={`h-full p-[2px] duration-500 hover:scale-105 ${dark? 'bg-text_main':'bg-card_black'}`}>
                                                         <img className="h-full" src={`${posterUrlSm}${smlr.poster_path}`} alt="similar movie" />
                                                     </div>
@@ -242,4 +230,4 @@ const MovieDetails = () => {
      );
 }
  
-export default MovieDetails;
+export default TvShowDetails;

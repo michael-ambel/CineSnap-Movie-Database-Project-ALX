@@ -30,7 +30,7 @@ npm start
 4. Set up your API key by creating a .env file:
 bash
 Copy code
-REACT_APP_TMDB_API_KEY=your_api_key_here
+VITE_API_KEY=your_api_key_here
 
 Project Goals
 This project is designed to showcase my front-end development skills by integrating modern technologies like React and Tailwind CSS, as well as working with external APIs to create a fully functional and responsive web application.

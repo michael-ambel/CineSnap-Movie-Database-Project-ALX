@@ -8,7 +8,6 @@ const Home = () => {
         
             <div className="flex flex-col items-center w-full min-w-[1024px] font-normal text-text_main">
                 <Header />
-                <SearchedMovies />
                 <Hero />
                 <Footer />
             </div>

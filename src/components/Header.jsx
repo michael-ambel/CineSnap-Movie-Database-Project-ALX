@@ -1,103 +1,39 @@
 import { useEffect, useState } from "react";
 import { useSection } from "../contexts/SectionContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSearchContext } from "../contexts/SearchContext";
 
 const Header  = () => {
     const navigate = useNavigate()
     
-    const {searchIn, setSearchIn, setSearched, searchBtn, setSearchBtn, setSearchLoading, searchError, setSearchError, apiKey} = useSearchContext()
+    const {searchIn, setSearchIn, newSearch, setNewSearch } = useSearchContext()
 
     const {activeSection, setActiveSection, dark, setDark, homeRef, moviesRef, tvShowsRef} = useSection();
 
-    const searchHandler = async (e) => {
-        e.preventDefault()
-        !searchBtn && navigate('/#movies')
-      if(searchIn){
-        setSearchBtn(true)
-        setSearchLoading(true)
-        setSearchError(null)
-
-        try{
-            const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchIn}`)
-            const movies = await response.json()
-            if(!response.ok){
-                throw Error ('Fetching Error')
-            }
-
-
-            if(movies.results.length === 0){
-                throw Error('No Movie Found')
-            }
-
-            if(movies.results.length > 0){
-                setSearched(movies.results)
-                setSearchLoading(false)
-                setSearchError(null)
-            }
-            
-            
-        }
-        catch(error){
-        
-            setSearchError(error.message)
-            setSearchLoading(false)
-        }  
-      }
-        
-
-
-
-    }
-    
     const themeHandler = (e) => {
         e.preventDefault()
         setDark(!dark)
     }
 
-   
+    
+
 
     useEffect(() => {
-        const sections = [
-            {id: 'home', ref: homeRef },
-            {id: 'movies', ref: moviesRef },
-            {id: 'tvshows', ref: tvShowsRef }
-        ];
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if(entry.isIntersecting){
-                        setActiveSection(entry.target.id)
-                    }
-                })
-            },{threshold: 1}
-        );
-
-        sections.forEach((section) => {
-            if(section.ref.current){
-                observer.observe(section.ref.current)
-            }
-        });
-
-        return () => {
-            sections.forEach((section) => {
-                if(section.ref.current){
-                    observer.unobserve(section.ref.current)
-                }
-            });
-
-        };
+        
+        setNewSearch(false)
 
       }, [])
 
+      const newSearchHandler = () => {
+        setNewSearch(!newSearch)
+    }
+
       function scrollToSection(section) {
         navigate(`/#${section}`)
-        
-        setSearchBtn(false)
+        setSearchIn('')
+
         const element = document.getElementById(section);
 
-        // Check if element exists
         if (!element) {
             return;
         }
@@ -122,13 +58,13 @@ const Header  = () => {
                 }}
                 value = {searchIn}
                 className={`text-center px-3 w-[245px] h-[30px] rounded-[39px] placeholder:font-light font-normal border-[2px]  border-none outline-none placeholder:text-inactive ${dark? "bg-text_main text-card_black" : "bg-card_black text-text_main"}`}  />
-                <button onClick={searchHandler}><img className="w-[28px] h-[28px] bg-transparent" src="/icons/search.png" alt="" /></button>
+                <Link to = '/search'><button onClick={newSearchHandler} ><img className="w-[28px] h-[28px] bg-transparent" src="/icons/search.png" alt="" /></button></Link>
             </form>
             <nav>
                 <ul className={`flex items-center justify-between w-[270px] h-[28px] text-[16px] font-normal ${dark? "text-text_main" : "text-card_black"}`}>
-                    <button className= {`w-[80px] rounded-full ${activeSection === 'home' ? "border-text_red border-[1px]" : "border-none"}`} onClick={() => scrollToSection('movies')}>Home</button>
-                    <button className= {`w-[80px] rounded-full ${activeSection === 'movies' ? "border-text_red border-[1px]" : "border-none"}`} onClick={() => scrollToSection('movies')}>Movies</button>
-                    <button className= {`w-[80px] rounded-full ${activeSection === 'tvshows' ? "border-text_red border-[1px]" : "border-none"}`} onClick={() => scrollToSection('tvshows')}>Tv Shows</button>
+                    {/* <button className= {`w-[80px] rounded-full ${activeSection === 'home' ? "border-text_red border-[1px]" : "border-none"}`} onClick={() => scrollToSection('movies')}>Home</button> */}
+                    <button className= {`w-[80px] rounded-full`} onClick={() => scrollToSection('movies')}>Movies</button>
+                    <button className= {`w-[80px] rounded-full`} onClick={() => scrollToSection('tvshows')}>Tv Shows</button>
                 </ul>
             </nav>
             <div className="flex w-[100px] h-[34px] justify-between items-center">

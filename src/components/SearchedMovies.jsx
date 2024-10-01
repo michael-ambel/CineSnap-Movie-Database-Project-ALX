@@ -1,22 +1,64 @@
+import { useEffect, useState } from "react";
 import { useSearchContext } from "../contexts/SearchContext";
 import { useSection } from "../contexts/SectionContext";
 import { Link } from "react-router-dom";
+import Header from "./Header";
 
-const SearchedMovies = (props) => {
+const SearchedMovies = () => {
+    const [searchWord, setSearchWord] = useState(null)
     const posterUrlSm = 'https://image.tmdb.org/t/p/w185'
     const {dark} = useSection();
-    const {searched, searchBtn, searchLoading, searchError} = useSearchContext()
+    const {searchIn, searched, setSearched,  searchLoading,setSearchLoading, searchError, setSearchError, apiKey, newSearch, setSearchIn} = useSearchContext()
+    console.log(searchIn);
+    useEffect(() => {
+
+        setSearchWord(searchIn)
+
+        const searchHandler = async (searchIn) => {
+          
+            setSearchLoading(true)
+            setSearchError(null)
+    
+            try{
+                const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchIn}`)
+                const movies = await response.json()
+                if(!response.ok){
+                    throw Error ('Fetching Error')
+                }
+                if(movies.results.length === 0){
+                    console.log('no movie found');
+                    throw Error('No Movie Found')
+                }
+    
+                if(movies.results.length > 0){
+                    setSearched(movies.results)                    
+                    setSearchLoading(false)
+                    setSearchError(null)
+                    setSearchIn('')
+                }                           
+            }
+            catch(error){
+                setSearchError(error.message)
+                setSearchLoading(false)
+                setSearched(null)
+            }  
+        }
+    searchHandler(searchIn)
+        
+    }, [newSearch])
   
  
     return ( 
-        <div className={`w-full max-w-[1440px] mx-auto min-w-[1024px] bg-bg flex flex-col items-center justify-between px-[62px] py-[52px] ${dark? 'bg-bg' : 'bg-text_main'} ${searchBtn? 'block' : 'hidden'}`}>
-                        <div className="h-auto pb-[14px]">
-                            <p className={`h-[19px] font-bold text-[18px] my-[20px] ${dark? 'text-text_main':'text-card_black'}`}>Searched Result</p>
+        <div className="w-full text-text_main">
+            <Header />
+            <div className={`w-full max-w-[1440px] mx-auto min-w-[1024px] bg-bg flex flex-col items-center justify-between px-[62px] py-[52px] ${dark? 'bg-bg' : 'bg-text_main'}`}>
+                        <div className="h-auto mb-[40px]">
+                            <p className={`h-[19px] font-bold text-[18px] my-[10px] ${dark? 'text-text_main':'text-card_black'}`}>Searched Result for {searchWord}</p>
                         </div>
 
                         <div className={`w-full `}>
                             {searchLoading && <div>Loading...</div>}
-                            {searchError && <div>'{searchError}'</div>}
+                            {searchError && <div className={dark? 'text-text_main':'text-card_black'}>'{searchError}'</div>}
                             {searched && 
                             <div>
                                 <ul className="grid grid-cols-5 w-full justify-items-center justify- gap-[38px]">
@@ -41,6 +83,7 @@ const SearchedMovies = (props) => {
                             </div>}
                         </div>
                     </div>
+        </div>
      );
 }
  
