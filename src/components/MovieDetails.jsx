@@ -135,9 +135,9 @@ const MovieDetails = () => {
                                 </div>
                             </div>
                                                         
-                            <div className="col-span-12 md:col-span-8 lg:col-span-6 justify-between min-gap-[10px] h-full ">
+                            <div className="col-span-12 md:col-span-8 lg:col-span-6 justify-between h-full ">
                             {/* detail */}
-                                <div className="hidden md:flex flex-col justify-between w-[300px] gap-[20px]">                                    
+                                <div className="hidden md:flex flex-col justify-between md:pb-2 w-[300px] gap-[20px]">                                    
                                     <div className="flex flex-col items-start justify-between gap-[10px] "><span className="text-inactive">{dateYear(detail.release_date)}</span><span className="text-text_yelow font-semibold">{genres(detail.genres)}</span>
                                     </div>
                                     <div className="flex justify-between items-center w-full text-[14px]">
