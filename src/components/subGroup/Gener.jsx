@@ -34,7 +34,7 @@ const Gener = () => {
                 setGener(28)
                 break ;
             
-            case 'Sci_Fi':
+            case 'Sci-Fi':
                 setGener(878)
                 break ;
             
