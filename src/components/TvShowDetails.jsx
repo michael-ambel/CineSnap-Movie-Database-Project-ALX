@@ -76,7 +76,7 @@ const TvShowDetails = () => {
                 }
 
                 //similar
-                const similarRsp = await fetch(`https://api.themoviedb.org/3/tv/${id}/similar?api_key=${apiKey}`)
+                const similarRsp = await fetch(`https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${apiKey}`)
                 const similarData = await similarRsp.json()
                 
                 const Similar = similarData.results.slice(0,3)
@@ -100,14 +100,15 @@ const TvShowDetails = () => {
                 {!detail && <div>Loading....</div>}
                 {detail && 
                 <div className={`flex flex-col w-full min-w-[1024px] max-w-[1440px] px-[63px] py-[30px] h-auto ${dark? 'bg-bg': 'bg-text_main'}`}>
-                    <div className="flex w-full h-[420px]">
+                    <div className="flex w-full h-[420px] mb-[30px]">
                         <div className="flex justify-between h-auto w-full">
+
 
                             <div className= {`flex flex-col jus items-start w-auto h-full p-[3px] rounded-[6px] ${dark? 'bg-text_main' : 'bg-card_black'}`}>
                                 <img className="w-auto h-full rounded-[3px]" src={`${posterUrlSm}${detail.poster_path}`} alt="" />
                             </div>
                                                         
-                                <div className="flex flex-col justify-between  min-gap-2 h-full w-[520px]">
+                                <div className="flex flex-col justify-between min-gap-2 h-full w-[520px]">
                                     {/* detail */}
                                     <div className="flex flex-col justify-between w-[340px] h-auto gap-2">
                                         <h1 className="text-[24px] font-semibold text-left">{detail.name}</h1>
@@ -150,10 +151,10 @@ const TvShowDetails = () => {
                                 </div>
 
 
-                                <div className="flex flex-col justify-between items-end w-[266px]">
+                                <div className="flex flex-col justify-between h-full items-end w-[266px]">
                                     {/* similar movies */}
                                     <div className={`flex flex-col justify-between p-2 min-w-[266px] h-auto ${dark? 'bg-card_black':'bg-text_main'}`}>
-                                        <h2 className="text-[14px] font-medium h-[20px] align-text-top mb-[6px] text-inactive">Similar Tv</h2>
+                                        <h2 className="text-[14px] font-medium h-[20px] align-text-top mb-[6px] text-inactive">Recommendation </h2>
                                         <div className="flex justify-between h-[114px]">
                                             
                                             {similar && 
@@ -174,7 +175,7 @@ const TvShowDetails = () => {
                                             <h2 className="text-[15] font-semibold text-left">Plot summary</h2>
                                             <p className="text-[15] text-left text-inactive my-1 leading-[18px]">{detail.overview}</p>
                                             <p className="text-[15] text-justify text-inactive my-1"><span className="text-text_red">Status: </span>{detail.status}</p>
-                                            <p className="text-[15] text-justify text-inactive my-1"><span className="text-text_red">Date: </span>{detail.release_date}</p>
+                                            <p className="text-[15] text-justify text-inactive my-1"><span className="text-text_red">Date: </span>{detail.first_air_date}</p>
                                     </div>}
                                 </div>
                         </div>

@@ -10,19 +10,19 @@ const Hero  = () => {
     const {searchBtn, apiKey} = useSearchContext()
     
 
-    const {dark, moviesRef, tvShowsRef} = useSection();
+    const {dark, moviesRef,} = useSection();
 
-    const today = new Date()
+
 
     useEffect(() => {
 
     }, [])
     return ( 
-        <div className={`w-full flex flex-col items-start justify-start px-[62px] ${ dark? 'bg-bg' : 'bg-text_main'} ${searchBtn? 'hidden' : 'block'}`}>
+        <div className={`w-full flex flex-col items-start justify-start p-[14px] md:px-[36px] lg:px-[62px] ${ dark? 'bg-bg' : 'bg-text_main'} ${searchBtn? 'hidden' : 'block'}`}>
             <div className="flex w-full mx-auto items-start justify-between">
 
                 {/*Geners list */}
-                <div className="fixed flex flex-col justify-start top-[130px] h-[340px] w-[90px]">
+                <div className="hidden fixed md:flex flex-col justify-start top-[130px] h-[340px] w-[90px]">
                     <p className={`w-[80px] h-[16px] text-start font-bold mb-[21px] ${dark? 'text-text_main' : 'text-card_black'}`}>Gener</p>
                     <ul className={`flex flex-col justify-between w-[90px] h-[243px] mb-[40px] text-start text-[13px] font-light ${dark? 'text-inactive' : 'text-card_black'}`}>
                         <li><Link to='/gener/Action'><button>Action</button></Link></li>
@@ -36,7 +36,7 @@ const Hero  = () => {
                     </ul>
                     <button className="w-[54px] h-[17px] text-[14px] font-semibold text-text_yelow">Log Out</button>
                 </div>
-                <div className="ml-[173px] w-full">
+                <div className="md:ml-[143px] lg:ml-[120px] w-full">
 
                     {/*Movies */}
                     {/*Tending Now */}

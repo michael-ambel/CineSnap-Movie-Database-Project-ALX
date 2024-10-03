@@ -12,6 +12,7 @@ import { useSearchContext } from "../../contexts/SearchContext";
 import { useSection } from "../../contexts/SectionContext";
 import { Link, useParams } from "react-router-dom";
 import Header from "../Header";
+import Footer from "../Footer";
 
 const Gener = () => {
     const posterUrlSm = 'https://image.tmdb.org/t/p/w185'
@@ -81,23 +82,23 @@ const Gener = () => {
         
         fetchGener(gener)
         }
-    },[gener])
+    },[p, gener])
 
     
 
     return (   
         <div className="w-full h-auto">
             <Header />
-            <div className={`w-full h-auto max-w-[1440px] mx-auto min-w-[1024px] bg-bg flex flex-col items-center justify-between px-[62px] py-[52px] ${dark? 'bg-bg' : 'bg-text_main'}`}>
+            <div className={`w-full h-auto max-w-[1440px] mx-auto  bg-bg flex flex-col items-center justify-between p-[14px] md:px-[36px] lg:px-[62px] py-[52px] ${dark? 'bg-bg' : 'bg-text_main'}`}>
                 <div className="h-auto pb-[14px]">
-                    <p className={`h-[19px] font-bold text-[18px] my-[20px] ${dark? 'text-text_main':'text-card_black'}`}>{p.id} </p>
+                    <p className={`h-[19px] font-bold text-[20px] mb-[50px] ${dark? 'text-text_main':'text-card_black'}`}>{p.id} </p>
                 </div>
                 <div className={`w-full `}>
                     {isLoading && <div>Loading...</div>}
                     {error && <div>'{error}'</div>}
                     {data && 
                     <div>
-                        <ul className="grid grid-cols-5 w-full justify-items-center justify- gap-[38px]">
+                        <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 w-full justify-items-center justify- gap-[38px]">
                             {data.map((movie) => (
                                 <li key={movie.id}>
                                     <Link to={`/detail/${movie.id}`} className="flex flex-col items-start h-[300px] w-[153px]">
@@ -119,6 +120,7 @@ const Gener = () => {
                     </div>}
                 </div>
             </div>
+            <Footer />
         </div>       
      );
 }

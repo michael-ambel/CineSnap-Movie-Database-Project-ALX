@@ -3,6 +3,7 @@ import { useSearchContext } from "../contexts/SearchContext";
 import { useSection } from "../contexts/SectionContext";
 import { Link } from "react-router-dom";
 import Header from "./Header";
+import Footer from "./Footer";
 
 const SearchedMovies = () => {
     const [searchWord, setSearchWord] = useState(null)
@@ -51,7 +52,7 @@ const SearchedMovies = () => {
     return ( 
         <div className="w-full text-text_main">
             <Header />
-            <div className={`w-full max-w-[1440px] mx-auto min-w-[1024px] bg-bg flex flex-col items-center justify-between px-[62px] py-[52px] ${dark? 'bg-bg' : 'bg-text_main'}`}>
+            <div className={`w-full max-w-[1440px] mx-auto  bg-bg flex flex-col items-center justify-between p-[14px] md:px-[36px] lg:px-[62px] py-[52px]  ${dark? 'bg-bg' : 'bg-text_main'}`}>
                         <div className="h-auto mb-[40px]">
                             <p className={`h-[19px] font-bold text-[18px] my-[10px] ${dark? 'text-text_main':'text-card_black'}`}>Searched Result for {searchWord}</p>
                         </div>
@@ -61,7 +62,7 @@ const SearchedMovies = () => {
                             {searchError && <div className={dark? 'text-text_main':'text-card_black'}>'{searchError}'</div>}
                             {searched && 
                             <div>
-                                <ul className="grid grid-cols-5 w-full justify-items-center justify- gap-[38px]">
+                                <ul className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 w-full justify-items-center justify- gap-[38px]">
                                     {searched.map((movie) => (
                                         <li key={movie.id}>
                                             <Link to={`/detail/${movie.id}`} className="flex flex-col items-start h-[300px] w-[153px]">
@@ -83,6 +84,7 @@ const SearchedMovies = () => {
                             </div>}
                         </div>
                     </div>
+                    <Footer />
         </div>
      );
 }

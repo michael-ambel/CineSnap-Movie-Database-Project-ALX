@@ -40,7 +40,7 @@ const Catagory = ({dark, title, url, posterUrlSm, movie}) => {
     return ( 
         <div className="flex flex-col w-full h-auto mt-[34px]">
                         <div className="h-auto pb-[14px]">
-                            <p className={`h-[19px] font-bold text-[18px] my-[20px] ${dark? 'text-text_main':'text-card_black'}`}>{title}</p>
+                            <p className={`h-[19px] font-bold text-[18px] my-[20px] ${dark? 'text-text_yelow':'text-text_yelow'}`}>{title}</p>
                         </div>
 
                         <div>
@@ -48,7 +48,7 @@ const Catagory = ({dark, title, url, posterUrlSm, movie}) => {
                             {popularError && <div>{popularError}</div>}
                             {popular && 
                             <div>
-                                <ul className="grid grid-cols-5 w-full gap-[38px]">
+                                <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  w-full justify-items-center gap-[38px]">
                                     {popular.map(movie => (
                                         <li key={movie.id}>
                                             <Link to={m? `/movie/${movie.id}` : `/tvshow/${movie.id}`} className="flex flex-col items-start h-[300px] w-[153px]">
