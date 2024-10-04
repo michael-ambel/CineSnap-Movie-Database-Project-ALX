@@ -61,7 +61,7 @@ const Header  = () => {
     return ( 
         <div className={`sticky top-0 z-10 flex flex-col md:flex-row items-center justify-between w-full h-[140px] md:h-[130px] max-w-[1440px] mx-auto px-[14px] md:px-[36px] lg:px-[62px] py-[20px] md:py-[52px] 
             ${dark? 'bg-bg':'bg-text_main'}`}>
-            <span className={`hidden md:flex text-[26px] w-[120px] font-light ${dark? 'text-text_main':'text-card'}`}>Cine<span className="font-bold text-text_red">Snap</span></span>
+            <span onClick={() => scrollToSection('movies')} className={`hidden md:flex text-[26px] w-[120px] font-light ${dark? 'text-text_main':'text-card'}`}>Cine<span className="font-bold text-text_red">Snap</span></span>
             <div className="flex md:hidden items-end justify-between w-full">
                 <span className={`md:hidden flex text-[26px] w-[120px] font-light ${dark? 'text-text_main':'text-card'}`}>Cine<span className="font-bold text-text_red">Snap</span></span>
                 <button onClick={menuHndler} className="w-[34px] h-[30px]"><img src={`${dark? '/icons/menu.png':'/icons/menu-black.png'}`} alt="" /></button>
