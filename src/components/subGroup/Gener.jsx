@@ -29,6 +29,7 @@ const Gener = () => {
     
     
     useEffect(() => {
+        window.scrollTo(0, 0);
         switch (p.id){
             case 'Action':
                 setGener(28)
