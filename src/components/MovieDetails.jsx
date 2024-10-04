@@ -226,7 +226,7 @@ const MovieDetails = () => {
                             
                                 <div className="flex flex-wrap gap-4 w-full justify-evenly mt-4">
                                     {casts.map(cast => (
-                                        <div className="flex flex-col justify-between w-[60px] items-start h-[120px] text-[14px] font-semibold text-inactive">
+                                        <div className="flex flex-col justify-between w-[60px] items-start h-[140px] text-[14px] font-semibold text-inactive">
                                             {cast && 
                                             <div>
                                                 <div className="w-[59px] h-[59px] mt-4 mb-2 rounded-full flex items-center justify-center overflow-hidden bg-text_main">

@@ -50,8 +50,8 @@ const Catagory = ({dark, title, url, posterUrlSm, movie}) => {
                             <div>
                                 <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  w-full justify-items-center gap-[38px]">
                                     {popular.map(movie => (
-                                        <li key={movie.id}>
-                                            <Link to={m? `/movie/${movie.id}` : `/tvshow/${movie.id}`} className="flex flex-col items-start h-[300px] w-[153px]">
+                                        <li>
+                                            <Link to={m? `/movie/${movie.id}` : `/tvshow/${movie.id}`} key={movie.id} className="flex flex-col items-start h-[300px] w-[153px]">
                                                 <div className={`w-full p-[3px] h-[228px] rounded-[4px] duration-500 hover:scale-105 ${dark? 'bg-text_main' : 'bg-card'}`}>
                                                     <img src={movie.poster_path? `${posterUrlSm}${movie.poster_path}`: `\del\EVOL.png`} alt="" />  
                                                 </div>
